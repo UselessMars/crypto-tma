@@ -1,10 +1,12 @@
+/* RED BULL F1 MATTE THEME */
 :root {
-    --bg-color: #121822; /* Темный фон как на скрине */
-    --card-bg: #1c2431; /* Фон карточек */
-    --input-bg: #121822;
+    --bg-color: #131A29;        /* Очень темный, матовый темно-синий */
+    --card-bg: #1B2333;         /* Фон карточек */
+    --input-bg: #283144;        /* Фон полей ввода */
     --text-color: #ffffff;
-    --accent-color: #00c087; /* Зеленый цвет */
-    --text-secondary: #7e8b9f;
+    --accent-color: #FAEB03;    /* RED BULL YELLOW/GOLD (Основной акцент) */
+    --secondary-accent: #E8002D;/* RED BULL RED (Второстепенный акцент, для рейтинга) */
+    --info-color: #99A8C5;      /* Светло-синий/серый для второстепенной информации */
 }
 
 body {
@@ -20,7 +22,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 500px; /* Ограничение ширины для ПК */
+    max-width: 500px;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -40,7 +42,8 @@ header {
 
 .user-info {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--secondary-accent); /* Красный акцент для имени пользователя */
+    font-weight: 600;
 }
 
 .exchange-card {
@@ -64,7 +67,7 @@ header {
 
 .discount {
     font-size: 12px;
-    color: #ff9f43;
+    color: var(--secondary-accent); /* Красный акцент для скидки */
 }
 
 .input-row {
@@ -79,7 +82,7 @@ header {
 }
 
 .input-row:focus-within {
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--accent-color); /* Желтый акцент при фокусе */
 }
 
 input {
@@ -90,7 +93,6 @@ input {
     width: 60%;
     outline: none;
     font-weight: bold;
-    /* Убираем стрелки в инпутах типа number */
     -moz-appearance: textfield;
 }
 
@@ -108,49 +110,39 @@ input::-webkit-inner-spin-button {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    background: #2a3445;
+    background: #38435A; /* Более темный синий для выделения */
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 14px;
-    
-    /* Для позиционирования стрелки */
     position: relative; 
 }
 
 .currency-selector select {
-    /* Наследует цвета от родительского контейнера */
     background: transparent; 
     color: var(--text-color);
-    
-    /* Убирает стандартные стили браузера */
     border: none;
     outline: none;
-    -webkit-appearance: none; /* Chrome, Safari, Opera */
-    -moz-appearance: none;    /* Firefox */
-    appearance: none;        /* Стандарт */
-    
-    /* Растягивает select на весь контейнер */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     height: 30px;
-    padding-right: 20px; /* Оставляем место для стилизованной стрелки */
-    
+    padding-right: 20px; 
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
 }
 
-/* Добавляем свою стрелку */
 .currency-selector::after {
     content: '▼';
     position: absolute;
     top: 50%;
     right: 8px; 
     transform: translateY(-50%);
-    color: var(--text-secondary);
+    color: var(--accent-color); /* Желтая стрелка */
     font-size: 10px;
     pointer-events: none; 
 }
 
-/* Стили для опций (выпадающий список) */
 .currency-selector option {
     background-color: var(--card-bg); 
     color: var(--text-color);
@@ -164,28 +156,25 @@ input::-webkit-inner-spin-button {
     justify-content: space-between;
     margin-top: 8px;
     font-size: 12px;
-    color: var(--text-secondary);
+    color: var(--info-color); /* Светло-серый */
 }
 
 
 /* --- СТИЛИ ДЛЯ СВИТЧЕРА --- */
 
-/* Контейнер для свитчера */
-.swap-icon { /* Заменяем ваш старый swap-icon на flex-контейнер для кнопки */
+.swap-icon { 
     text-align: center;
     margin: 10px 0;
     font-size: 18px;
-    color: var(--text-secondary);
-    
+    color: var(--info-color);
     display: flex;
     justify-content: center;
 }
 
-/* Кнопка свитчера */
 .switcher-btn {
-    background: #282c34; 
-    border: 1px solid #3c3c43;
-    color: var(--accent-color); 
+    background: #38435A; /* Темный синий фон для кнопки */
+    border: 1px solid var(--accent-color); /* Желтая рамка */
+    color: var(--accent-color); /* Желтый цвет стрелок */
     border-radius: 50%; 
     width: 35px;
     height: 35px;
@@ -195,13 +184,12 @@ input::-webkit-inner-spin-button {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s;
-    /* Убираем стандартные стили кнопки */
     outline: none; 
     box-shadow: none;
 }
 
 .switcher-btn:hover {
-    background-color: #3c3c43;
+    background-color: #48536A;
 }
 
 
@@ -209,8 +197,8 @@ input::-webkit-inner-spin-button {
 
 .main-btn {
     width: 100%;
-    background-color: var(--accent-color);
-    color: white;
+    background-color: var(--accent-color); /* Желтый цвет */
+    color: var(--bg-color); /* Очень темный синий текст на желтом */
     border: none;
     padding: 16px;
     border-radius: 12px;
