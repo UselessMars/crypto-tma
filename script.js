@@ -33,16 +33,25 @@ async function fetchRatesAndUserData() {
     const apiSymbol = RECEIVE_CURRENCY; 
 
     try {
-        rateInfo.innerText = "Загрузка курса...";
+        rateInfo.innerText = "Загрузка курса..."; // Показываем загрузку, пока ждем ответ
         const response = await fetch(`${API_ENDPOINT}?user_id=${userId}&symbol=${apiSymbol}`);
+        
+        if (!response.ok) { // Если ответ не 200 OK
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         
         currentRate = data.rate; 
         let userRating = data.rating;
         
         // Обновляем UI: имя пользователя уже установлено, просто добавляем рейтинг
-        // Используем textContent, чтобы не сбросить установленное имя пользователя
-        userInfo.textContent = userInfo.textContent.split(' ')[0] + ` ⭐ ${userRating}`; 
+        // Убедимся, что имя пользователя установлено до добавления рейтинга
+        if (!userInfo.textContent || userInfo.textContent === 'Loading...') {
+            setUserInfo(); // Переустанавливаем имя, если оно еще не загружено
+        }
+        // Добавляем рейтинг. Если там уже есть рейтинг, он будет заменен
+        userInfo.textContent = userInfo.textContent.split(' ⭐')[0] + ` ⭐ ${userRating}`; 
         
         rateInfo.innerText = `1 ${RECEIVE_CURRENCY} = ~${currentRate.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ${PAY_CURRENCY}`;
         
@@ -50,7 +59,6 @@ async function fetchRatesAndUserData() {
 
     } catch (error) {
         console.error("Ошибка при получении данных с сервера:", error);
-        // ИСПРАВЛЕННЫЙ ТЕКСТ ОШИБКИ, ССЫЛАЮЩИЙСЯ НА ПОРТ 8000
         rateInfo.innerText = "Ошибка загрузки курса. Проверьте IP-адрес и порт 8000."; 
         currentRate = 0;
         calculate();
@@ -67,10 +75,11 @@ function setUserInfo() {
             displayName = `@${user.username}`;
         }
         
-        userInfo.textContent = displayName; 
+        userInfo.textContent = displayName; // Устанавливаем только имя/username
     } else {
         userInfo.textContent = 'Гость';
     }
+    // "Гость" или имя пользователя не должны быть кликабельны, это просто текст.
 }
 
 // --- Общая функция обновления обмена ---
@@ -78,7 +87,7 @@ function updateExchange() {
     fetchRatesAndUserData(); 
 }
 
-// --- Логика свитчера ---
+// --- Логика свитчера (вызывается из index.html) ---
 window.switchCurrencies = function() {
     let tempPayValue = payCurrencySelect.value;
     let tempReceiveValue = receiveCurrencySelect.value;
@@ -136,5 +145,5 @@ payInput.addEventListener('input', calculate);
 receiveCurrencySelect.addEventListener('change', updateExchange); 
 payCurrencySelect.addEventListener('change', updateExchange); 
 
-setUserInfo(); 
-fetchRatesAndUserData();
+setUserInfo(); // Сначала устанавливаем имя пользователя
+fetchRatesAndUserData(); // Затем загружаем курс и рейтинг
