@@ -1,11 +1,14 @@
-/* RED BULL F1 MATTE THEME - INSPIRED BY IMAGE */
+/* УНИФИЦИРОВАННЫЙ СТИЛЬ F1: RED BULL + FERRARI */
 :root {
-    --bg-color: #0E1628;        /* Очень темный, почти черный, матовый темно-синий */
-    --card-bg: #1A2538;         /* Фон карточек */
+    --bg-color: #0D111A;        /* Очень темный, почти черный, матовый фон (Карбон/Ночная гонка) */
+    --card-bg: #1A2333;         /* Фон карточек */
     --input-bg: #212C41;        /* Фон полей ввода */
     --text-color: #E0E0E0;      /* Светлый, но не чисто белый текст */
-    --accent-color: #FAEB03;    /* RED BULL YELLOW/GOLD (Основной акцент) */
-    --secondary-accent: #DA002B;/* RED BULL RED (Второстепенный акцент, для рейтинга и скидки) */
+    
+    /* Основные акценты */
+    --accent-color: #FAEB03;    /* RED BULL YELLOW (Для кнопок и фокуса) */
+    --secondary-accent: #DA002B;/* FERRARI RED (Для рейтинга, скидки, hover-эффектов) */
+    
     --info-color: #8D9AB3;      /* Светло-синий/серый для второстепенной информации */
     --border-color: #3A4760;    /* Цвет рамки, менее контрастный */
 }
@@ -15,7 +18,7 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Race Sport', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial; /* Можно добавить F1 шрифт, если загрузить */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -34,12 +37,18 @@ header {
     align-items: center;
     margin-bottom: 20px;
 }
-/* --- СТИЛИ ДЛЯ ИНТЕРАКТИВНОГО ПРОФИЛЯ --- */
 
+.logo {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--secondary-accent); /* Логотип красным */
+}
+
+/* --- СТИЛИ ДЛЯ ИНТЕРАКТИВНОГО ПРОФИЛЯ (КНОПКИ) --- */
 .user-info-btn {
-    /* Наследуем стили от старого .user-info */
     font-size: 14px;
-    color: var(--secondary-accent); /* Красный акцент */
+    color: var(--info-color); 
     font-weight: 600;
 
     /* Сбрасываем стандартные стили кнопки */
@@ -52,33 +61,21 @@ header {
 }
 
 .user-info-btn:hover {
-    background-color: var(--input-bg); /* Темный фон при наведении */
+    background-color: var(--input-bg);
     color: var(--accent-color); /* Желтый текст при наведении */
 }
 
 .user-info-btn:active {
     transform: scale(0.98);
 }
-
-.logo {
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: 1px;
-    color: var(--accent-color); /* Логотип желтым */
-}
-
-.user-info {
-    font-size: 14px;
-    color: var(--secondary-accent); /* Красный акцент для имени пользователя */
-    font-weight: 600;
-}
+/* ------------------------------------------------ */
 
 .exchange-card {
     background-color: var(--card-bg);
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Более выраженная тень */
-    border: 1px solid var(--border-color); /* Легкая рамка */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 1px solid var(--border-color);
 }
 
 .input-group {
@@ -105,13 +102,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--border-color); /* Рамка в тон */
+    border: 1px solid var(--border-color);
     transition: border 0.2s, background-color 0.2s;
 }
 
 .input-row:focus-within {
     border: 1px solid var(--accent-color); /* Желтый акцент при фокусе */
-    background-color: #2F3950; /* Немного светлее при фокусе */
+    background-color: #2F3950;
 }
 
 input {
@@ -139,12 +136,12 @@ input::-webkit-inner-spin-button {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    background: #38435A; /* Более темный синий для выделения */
+    background: #38435A;
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 14px;
     position: relative; 
-    border: 1px solid var(--border-color); /* Рамка для селекта */
+    border: 1px solid var(--border-color);
     transition: border 0.2s;
 }
 
@@ -207,20 +204,20 @@ input::-webkit-inner-spin-button {
 }
 
 .switcher-btn {
-    background: #38435A; /* Темный синий фон для кнопки */
+    background: #38435A;
     border: 1px solid var(--accent-color); /* Желтая рамка */
     color: var(--accent-color); /* Желтый цвет стрелок */
     border-radius: 50%; 
-    width: 40px; /* Немного больше */
+    width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px; /* Больше стрелка */
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.2s, border-color 0.2s;
     outline: none; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Легкая тень */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .switcher-btn:hover {
@@ -234,26 +231,25 @@ input::-webkit-inner-spin-button {
 .main-btn {
     width: 100%;
     background-color: var(--accent-color); /* Желтый цвет */
-    color: var(--bg-color); /* Очень темный синий текст на желтом */
+    color: var(--bg-color); /* Темный текст на желтом */
     border: none;
     padding: 16px;
     border-radius: 12px;
-    font-size: 18px; /* Немного больше текст */
+    font-size: 18px;
     font-weight: bold;
-    margin-top: 25px; /* Немного отступ */
+    margin-top: 25px;
     cursor: pointer;
     transition: transform 0.1s, background-color 0.2s;
-    box-shadow: 0 4px 10px rgba(var(--accent-color), 0.4); /* Тень в цвет акцента */
+    box-shadow: 0 4px 10px rgba(250, 235, 3, 0.4); /* Тень в цвет акцента */
 }
 
 .main-btn:hover {
-    background-color: #FFDE00; /* Чуть светлее желтый при наведении */
+    background-color: #FFDE00;
 }
 
 .main-btn:active {
     transform: scale(0.98);
     background-color: var(--secondary-accent); /* Красный при нажатии */
     color: white;
-    box-shadow: 0 2px 8px rgba(var(--secondary-accent), 0.6);
+    box-shadow: 0 2px 8px rgba(218, 0, 43, 0.6);
 }
-
