@@ -3,7 +3,7 @@
     --card-bg: #1c2431; /* Фон карточек */
     --input-bg: #121822;
     --text-color: #ffffff;
-    --accent-color: #00c087; /* Зеленый цвет Sova */
+    --accent-color: #00c087; /* Зеленый цвет */
     --text-secondary: #7e8b9f;
 }
 
@@ -51,7 +51,7 @@ header {
 }
 
 .input-group {
-    background-color: var(--card-bg); /* Можно сделать темнее, если нужно выделение */
+    background-color: var(--card-bg);
     margin-bottom: 10px;
 }
 
@@ -90,7 +90,18 @@ input {
     width: 60%;
     outline: none;
     font-weight: bold;
+    /* Убираем стрелки в инпутах типа number */
+    -moz-appearance: textfield;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* --- СТИЛИ ДЛЯ ВЫБОРА ВАЛЮТЫ (SELECT) --- */
 
 .currency-selector {
     display: flex;
@@ -101,12 +112,52 @@ input {
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 14px;
+    
+    /* Для позиционирования стрелки */
+    position: relative; 
 }
 
-.currency-selector img {
-    width: 20px;
-    height: 20px;
+.currency-selector select {
+    /* Наследует цвета от родительского контейнера */
+    background: transparent; 
+    color: var(--text-color);
+    
+    /* Убирает стандартные стили браузера */
+    border: none;
+    outline: none;
+    -webkit-appearance: none; /* Chrome, Safari, Opera */
+    -moz-appearance: none;    /* Firefox */
+    appearance: none;        /* Стандарт */
+    
+    /* Растягивает select на весь контейнер */
+    height: 30px;
+    padding-right: 20px; /* Оставляем место для стилизованной стрелки */
+    
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }
+
+/* Добавляем свою стрелку */
+.currency-selector::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 8px; 
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 10px;
+    pointer-events: none; 
+}
+
+/* Стили для опций (выпадающий список) */
+.currency-selector option {
+    background-color: var(--card-bg); 
+    color: var(--text-color);
+}
+
+
+/* --- СТИЛИ ДЛЯ ИНФО-РЯДА --- */
 
 .info-row {
     display: flex;
@@ -116,12 +167,45 @@ input {
     color: var(--text-secondary);
 }
 
-.swap-icon {
+
+/* --- СТИЛИ ДЛЯ СВИТЧЕРА --- */
+
+/* Контейнер для свитчера */
+.swap-icon { /* Заменяем ваш старый swap-icon на flex-контейнер для кнопки */
     text-align: center;
     margin: 10px 0;
     font-size: 18px;
     color: var(--text-secondary);
+    
+    display: flex;
+    justify-content: center;
 }
+
+/* Кнопка свитчера */
+.switcher-btn {
+    background: #282c34; 
+    border: 1px solid #3c3c43;
+    color: var(--accent-color); 
+    border-radius: 50%; 
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    /* Убираем стандартные стили кнопки */
+    outline: none; 
+    box-shadow: none;
+}
+
+.switcher-btn:hover {
+    background-color: #3c3c43;
+}
+
+
+/* --- СТИЛИ ДЛЯ КНОПКИ --- */
 
 .main-btn {
     width: 100%;
@@ -139,31 +223,4 @@ input {
 
 .main-btn:active {
     transform: scale(0.98);
-
-}
-/* Контейнер для свитчера */
-.switcher {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-/* Кнопка свитчера */
-.switcher-btn {
-    background: #282c34; /* Темный фон */
-    border: 1px solid #3c3c43;
-    color: #4CAF50; /* Зеленый текст */
-    border-radius: 50%; /* Круглая кнопка */
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.switcher-btn:hover {
-    background-color: #3c3c43;
 }
