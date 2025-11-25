@@ -17,8 +17,8 @@ const mainBtn = document.getElementById('main-btn');
 
 // Логика получения данных с сервера (API)
 async function fetchRatesAndUserData() {
-    // !ВАЖНО: ЗАМЕНИТЬ НА IP АДРЕС ТВОЕГО VPS И ПОРТ 8080
-    const API_ENDPOINT = 'http://77.238.238.67:8080/api/data'; 
+    // !ВАЖНО: ЗАМЕНИТЬ НА IP АДРЕС ТВОЕГО VPS И ПОРТ 8000
+    const API_ENDPOINT = 'http://77.238.238.67:8000/api/data'; 
     
     // Получаем ID пользователя из Telegram
     const userId = tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 0;
@@ -87,3 +87,4 @@ function sendData() {
 // Запуск при инициализации
 fetchRatesAndUserData(); 
 payInput.addEventListener('input', calculate);
+
