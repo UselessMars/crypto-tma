@@ -5,7 +5,7 @@ tg.expand();
 // Элементы
 const payInput = document.getElementById('pay-amount');
 const receiveInput = document.getElementById('receive-amount');
-const userInfo = document.getElementById('user-info');
+const userInfo = document.getElementById('user-info'); // Теперь это кнопка
 const rateInfo = document.getElementById('rate-info'); 
 const payCurrencySelect = document.getElementById('pay-currency'); 
 const receiveCurrencySelect = document.getElementById('receive-currency'); 
@@ -46,7 +46,6 @@ async function fetchRatesAndUserData() {
         let userRating = data.rating;
         
         // Обновляем UI: имя пользователя уже установлено, просто добавляем рейтинг
-        // Убедимся, что имя пользователя установлено до добавления рейтинга
         if (!userInfo.textContent || userInfo.textContent === 'Loading...') {
             setUserInfo(); // Переустанавливаем имя, если оно еще не загружено
         }
@@ -65,7 +64,7 @@ async function fetchRatesAndUserData() {
     }
 }
 
-// --- Установка имени пользователя (Новая функция) ---
+// --- Установка имени пользователя (Для кнопки) ---
 function setUserInfo() {
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
@@ -75,11 +74,10 @@ function setUserInfo() {
             displayName = `@${user.username}`;
         }
         
-        userInfo.textContent = displayName; // Устанавливаем только имя/username
+        userInfo.textContent = displayName; 
     } else {
         userInfo.textContent = 'Гость';
     }
-    // "Гость" или имя пользователя не должны быть кликабельны, это просто текст.
 }
 
 // --- Общая функция обновления обмена ---
@@ -87,7 +85,7 @@ function updateExchange() {
     fetchRatesAndUserData(); 
 }
 
-// --- Логика свитчера (вызывается из index.html) ---
+// --- Логика свитчера ---
 window.switchCurrencies = function() {
     let tempPayValue = payCurrencySelect.value;
     let tempReceiveValue = receiveCurrencySelect.value;
@@ -139,6 +137,38 @@ window.sendData = function() {
     tg.sendData(JSON.stringify(data)); 
     tg.close();
 }
+
+// --- Логика открытия профиля (Интерактивная кнопка) ---
+window.openProfile = function() {
+    const user = tg.initDataUnsafe.user;
+    
+    if (user) {
+        let message = `Ваш ID: ${user.id}\n`;
+        if (user.first_name) message += `Имя: ${user.first_name}\n`;
+        if (user.username) message += `Username: @${user.username}\n`;
+        
+        // Получаем рейтинг из текущего текста кнопки
+        const currentRatingText = userInfo.textContent;
+        const ratingMatch = currentRatingText.match(/⭐\s*(\d+\.?\d*)/);
+        const currentRating = ratingMatch ? ratingMatch[1] : 'Н/Д';
+
+        message += `Ваш текущий рейтинг: ⭐ ${currentRating}`;
+
+        tg.showPopup({
+            title: 'Ваш Профиль',
+            message: message,
+            buttons: [{type: 'ok', text: 'Закрыть'}]
+        });
+    } else {
+        // Если данные пользователя не загружены (режим "Гость")
+        tg.showPopup({
+            title: 'Вход не выполнен',
+            message: 'Данные пользователя не загружены. Попробуйте перезапустить Web App.',
+            buttons: [{type: 'ok', text: 'ОК'}]
+        });
+    }
+};
+
 
 // --- Запуск и слушатели событий ---
 payInput.addEventListener('input', calculate);
