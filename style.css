@@ -34,6 +34,31 @@ header {
     align-items: center;
     margin-bottom: 20px;
 }
+/* --- СТИЛИ ДЛЯ ИНТЕРАКТИВНОГО ПРОФИЛЯ --- */
+
+.user-info-btn {
+    /* Наследуем стили от старого .user-info */
+    font-size: 14px;
+    color: var(--secondary-accent); /* Красный акцент */
+    font-weight: 600;
+
+    /* Сбрасываем стандартные стили кнопки */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.user-info-btn:hover {
+    background-color: var(--input-bg); /* Темный фон при наведении */
+    color: var(--accent-color); /* Желтый текст при наведении */
+}
+
+.user-info-btn:active {
+    transform: scale(0.98);
+}
 
 .logo {
     font-weight: 800;
@@ -231,3 +256,4 @@ input::-webkit-inner-spin-button {
     color: white;
     box-shadow: 0 2px 8px rgba(var(--secondary-accent), 0.6);
 }
+
