@@ -1,12 +1,13 @@
-/* RED BULL F1 MATTE THEME */
+/* RED BULL F1 MATTE THEME - INSPIRED BY IMAGE */
 :root {
-    --bg-color: #131A29;        /* Очень темный, матовый темно-синий */
-    --card-bg: #1B2333;         /* Фон карточек */
-    --input-bg: #283144;        /* Фон полей ввода */
-    --text-color: #ffffff;
+    --bg-color: #0E1628;        /* Очень темный, почти черный, матовый темно-синий */
+    --card-bg: #1A2538;         /* Фон карточек */
+    --input-bg: #212C41;        /* Фон полей ввода */
+    --text-color: #E0E0E0;      /* Светлый, но не чисто белый текст */
     --accent-color: #FAEB03;    /* RED BULL YELLOW/GOLD (Основной акцент) */
-    --secondary-accent: #E8002D;/* RED BULL RED (Второстепенный акцент, для рейтинга) */
-    --info-color: #99A8C5;      /* Светло-синий/серый для второстепенной информации */
+    --secondary-accent: #DA002B;/* RED BULL RED (Второстепенный акцент, для рейтинга и скидки) */
+    --info-color: #8D9AB3;      /* Светло-синий/серый для второстепенной информации */
+    --border-color: #3A4760;    /* Цвет рамки, менее контрастный */
 }
 
 body {
@@ -14,7 +15,7 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Race Sport', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial; /* Можно добавить F1 шрифт, если загрузить */
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -38,6 +39,7 @@ header {
     font-weight: 800;
     font-size: 20px;
     letter-spacing: 1px;
+    color: var(--accent-color); /* Логотип желтым */
 }
 
 .user-info {
@@ -50,7 +52,8 @@ header {
     background-color: var(--card-bg);
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* Более выраженная тень */
+    border: 1px solid var(--border-color); /* Легкая рамка */
 }
 
 .input-group {
@@ -77,18 +80,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid transparent;
-    transition: border 0.2s;
+    border: 1px solid var(--border-color); /* Рамка в тон */
+    transition: border 0.2s, background-color 0.2s;
 }
 
 .input-row:focus-within {
     border: 1px solid var(--accent-color); /* Желтый акцент при фокусе */
+    background-color: #2F3950; /* Немного светлее при фокусе */
 }
 
 input {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--text-color);
     font-size: 20px;
     width: 60%;
     outline: none;
@@ -115,6 +119,12 @@ input::-webkit-inner-spin-button {
     border-radius: 20px;
     font-size: 14px;
     position: relative; 
+    border: 1px solid var(--border-color); /* Рамка для селекта */
+    transition: border 0.2s;
+}
+
+.currency-selector:hover {
+    border-color: var(--accent-color); /* Желтый при наведении */
 }
 
 .currency-selector select {
@@ -156,7 +166,7 @@ input::-webkit-inner-spin-button {
     justify-content: space-between;
     margin-top: 8px;
     font-size: 12px;
-    color: var(--info-color); /* Светло-серый */
+    color: var(--info-color); 
 }
 
 
@@ -176,24 +186,25 @@ input::-webkit-inner-spin-button {
     border: 1px solid var(--accent-color); /* Желтая рамка */
     color: var(--accent-color); /* Желтый цвет стрелок */
     border-radius: 50%; 
-    width: 35px;
-    height: 35px;
+    width: 40px; /* Немного больше */
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px; /* Больше стрелка */
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, border-color 0.2s;
     outline: none; 
-    box-shadow: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Легкая тень */
 }
 
 .switcher-btn:hover {
     background-color: #48536A;
+    border-color: var(--secondary-accent); /* Красный при наведении */
 }
 
 
-/* --- СТИЛИ ДЛЯ КНОПКИ --- */
+/* --- СТИЛИ ДЛЯ КНОПКИ "ОБМЕНЯТЬ" --- */
 
 .main-btn {
     width: 100%;
@@ -202,13 +213,21 @@ input::-webkit-inner-spin-button {
     border: none;
     padding: 16px;
     border-radius: 12px;
-    font-size: 16px;
+    font-size: 18px; /* Немного больше текст */
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 25px; /* Немного отступ */
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(var(--accent-color), 0.4); /* Тень в цвет акцента */
+}
+
+.main-btn:hover {
+    background-color: #FFDE00; /* Чуть светлее желтый при наведении */
 }
 
 .main-btn:active {
     transform: scale(0.98);
+    background-color: var(--secondary-accent); /* Красный при нажатии */
+    color: white;
+    box-shadow: 0 2px 8px rgba(var(--secondary-accent), 0.6);
 }
