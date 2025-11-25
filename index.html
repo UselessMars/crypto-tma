@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crypto Exchange</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">P2P</div>
+            <div class="user-info" id="user-info">Loading...</div>
+        </header>
+
+        <div class="exchange-card">
+            
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label">Отдаете</span>
+                    <span class="discount">🔥 Скидка: 0%</span>
+                </div>
+                <div class="input-row">
+                    <input type="number" id="pay-amount" placeholder="0" value="1000">
+                    <div class="currency-selector">
+                        <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="RUB">
+                        <span>RUB (Sber)</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span>Мин: 1000</span>
+                    <span>Макс: 300000</span>
+                </div>
+            </div>
+
+            <div class="swap-icon">⬇️</div>
+
+            <div class="input-group">
+                <div class="label-row">
+                    <span class="label">Получаете</span>
+                </div>
+                <div class="input-row">
+                    <input type="number" id="receive-amount" placeholder="0" readonly>
+                    <div class="currency-selector">
+                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">
+                        <span>BTC</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span id="rate-info">1 BTC = ~6,200,000 RUB</span>
+                    <span>Резерв: 100</span>
+                </div>
+            </div>
+
+            <button class="main-btn" id="main-btn" onclick="sendData()">Обменять</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
