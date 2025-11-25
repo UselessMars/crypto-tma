@@ -7,21 +7,19 @@ const payInput = document.getElementById('pay-amount');
 const receiveInput = document.getElementById('receive-amount');
 const userInfo = document.getElementById('user-info');
 const rateInfo = document.getElementById('rate-info'); 
-// Новые элементы для выбора валют
 const payCurrencySelect = document.getElementById('pay-currency'); 
 const receiveCurrencySelect = document.getElementById('receive-currency'); 
 
 // Глобальная переменная для курса
 let currentRate = 0;
 
-// !ВАЖНО: АДРЕС ТВОЕГО VPS И ПОРТ 8000 (ПРОВЕРЕН И ИСПОЛЬЗУЕТСЯ)
+// !ВАЖНО: АДРЕС ТВОЕГО VPS И ПОРТ 8000
 const API_ENDPOINT = 'http://77.238.238.67:8000/api/data'; 
 
 // --- Логика получения данных с сервера (API) ---
 async function fetchRatesAndUserData() {
     const userId = tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 0;
     
-    // Берем актуальные валюты из полей select
     const RECEIVE_CURRENCY = receiveCurrencySelect.value;
     const PAY_CURRENCY = payCurrencySelect.value;
     
@@ -32,7 +30,6 @@ async function fetchRatesAndUserData() {
         return;
     }
     
-    // API на сервере берет курс в USDT, поэтому передаем только крипту, которую получаем
     const apiSymbol = RECEIVE_CURRENCY; 
 
     try {
@@ -40,13 +37,13 @@ async function fetchRatesAndUserData() {
         const response = await fetch(`${API_ENDPOINT}?user_id=${userId}&symbol=${apiSymbol}`);
         const data = await response.json();
         
-        currentRate = data.rate; // 1 {apiSymbol} = X RUB
+        currentRate = data.rate; 
         let userRating = data.rating;
         
-        // Обновляем UI
-        userInfo.innerText = `Рейтинг: ⭐ ${userRating}`;
+        // Обновляем UI: имя пользователя уже установлено, просто добавляем рейтинг
+        // Используем textContent, чтобы не сбросить установленное имя пользователя
+        userInfo.textContent = userInfo.textContent.split(' ')[0] + ` ⭐ ${userRating}`; 
         
-        // Форматируем курс
         rateInfo.innerText = `1 ${RECEIVE_CURRENCY} = ~${currentRate.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ${PAY_CURRENCY}`;
         
         calculate();
@@ -60,17 +57,33 @@ async function fetchRatesAndUserData() {
     }
 }
 
-// --- Общая функция обновления обмена (вызывается при смене select) ---
+// --- Установка имени пользователя (Новая функция) ---
+function setUserInfo() {
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        let displayName = user.first_name || 'Пользователь';
+        
+        if (user.username) {
+            displayName = `@${user.username}`;
+        }
+        
+        userInfo.textContent = displayName; 
+    } else {
+        userInfo.textContent = 'Гость';
+    }
+}
+
+// --- Общая функция обновления обмена ---
 function updateExchange() {
     fetchRatesAndUserData(); 
 }
 
-// --- Логика свитчера (вызывается из index.html) ---
+// --- Логика свитчера ---
 window.switchCurrencies = function() {
     let tempPayValue = payCurrencySelect.value;
     let tempReceiveValue = receiveCurrencySelect.value;
     
-    // Меняем значения в выпадающих списках
+    // Меняем значения
     payCurrencySelect.value = tempReceiveValue;
     receiveCurrencySelect.value = tempPayValue;
 
@@ -86,17 +99,7 @@ function calculate() {
         return;
     }
     
-    let result;
-    // ВАЖНО: Текущий API дает курс RUB/КРИПТА. 
-    // Если PAY_CURRENCY = RUB, то: Сумма / Курс
-    if (payCurrencySelect.value === 'RUB') {
-        result = amount / currentRate;
-    } else {
-        // Если, например, обмениваем BTC на RUB, то: Сумма * Курс
-        // Эта логика требует поддержки API для обратного курса
-        result = amount * currentRate; 
-    }
-
+    let result = amount / currentRate; 
     receiveInput.value = result.toFixed(8);
 }
 
@@ -129,10 +132,9 @@ window.sendData = function() {
 }
 
 // --- Запуск и слушатели событий ---
-// Слушатели для полей ввода и выбора валют
 payInput.addEventListener('input', calculate);
 receiveCurrencySelect.addEventListener('change', updateExchange); 
 payCurrencySelect.addEventListener('change', updateExchange); 
 
-// Первый запуск при загрузке
+setUserInfo(); 
 fetchRatesAndUserData();
