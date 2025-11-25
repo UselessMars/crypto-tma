@@ -40,7 +40,8 @@ async function fetchRatesAndUserData() {
 
     } catch (error) {
         console.error("Ошибка при получении данных с сервера:", error);
-        rateInfo.innerText = "Ошибка загрузки курса. Проверьте IP-адрес и порт 8080.";
+        // ВОТ ЭТА СТРОКА ДОЛЖНА БЫТЬ ИСПРАВЛЕНА:
+        rateInfo.innerText = "Ошибка загрузки курса. Проверьте IP-адрес и порт 8000."; 
     }
 }
 
@@ -87,4 +88,5 @@ function sendData() {
 // Запуск при инициализации
 fetchRatesAndUserData(); 
 payInput.addEventListener('input', calculate);
+
 
